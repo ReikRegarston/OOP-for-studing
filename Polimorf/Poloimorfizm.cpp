@@ -6,6 +6,8 @@ using std::cout;
 using std::string;
 using std::endl;
 
+class Weapon {};
+
 class Person
 {
 private:
@@ -13,17 +15,16 @@ private:
 	int age;
 	bool isHappy;
 
-//protected:
-//	void info()
-//	{
-//		cout << "Person: " << name << endl << "age: " << age
-//			<< endl;
-//		get_hobby();
-//	}
+protected:
+	void info()
+	{
+		cout << "Person: " << name << endl << "Age: " << age << endl;
+		get_hobby();
+	}
 
 public:
 	string hobbies[3];
-	Person(){}
+	Person() {}
 	Person(string name, int age, bool isHappy, string type);
 	Person(string name, int age, bool isHappy, string* p, int n);
 
@@ -50,29 +51,41 @@ public:
 	}
 };
 
+class  Player final : public Person
+{
+private:
+	string power;
+
+public:
+	Player(string name, int age, bool isHappy, string type, string power) : Person(name, age, isHappy, type)
+	{
+		this->power = power;
+	}
+
+	Player() {}
+
+	void info()
+	{
+		Person::info();
+		cout << "Power: " << power << endl;
+	}
+};
+
+class Enemy : public Person
+{
+
+};
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	Person alex = Person("Alex", 23, true, "player");
-	
-	string hobbies[] = { "skate", "paint", "football" };
-	string* p = hobbies;
-	Person bob = Person("Bob", 25, false, p, 3);
-	cout << alex.get_name() << endl << alex.get_age() << endl << alex.get_isHappy() << endl;
-	bob.increase_age(1).increase_age(5).increase_age(1);
-	cout << bob.get_name() << endl << bob.get_age() << endl;
-	bob.get_hobby();
-
-	Person* p_alex = &alex;
-	cout << p_alex->get_name() << endl;
-
-	Person* max = new Person;
-	bool notHappy = false;
-	max->set_isHappy(notHappy);
-	max->set_data("Max", 56);
-	cout << max->get_name() << endl;
-	delete max;
+	string hobby[] = {"walking", "thinkig", "dieing"};
+	string* p_hobby = hobby;
+	Player offName("__", 22, false, "slayer", "paradocs");
+	offName.set_hobby(p_hobby, 3);
+	offName.info();
+	//Enemy soulsHunter("DeathDestany", 22, false, "reason");
 
 	return 0;
 }

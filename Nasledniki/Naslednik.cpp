@@ -6,6 +6,8 @@ using std::cout;
 using std::string;
 using std::endl;
 
+class Weapon{};
+
 class Person
 {
 private:
@@ -16,7 +18,7 @@ private:
 public:
 	string hobbies[3];
 	Person() {}
-	Person(string name, int age, bool isHappy, string type);
+	explicit Person(string name, int age, bool isHappy, string type);
 	Person(string name, int age, bool isHappy, string* p, int n);
 
 	void set_data(string name, int age, bool isHappy);
@@ -42,12 +44,34 @@ public:
 	}
 };
 
+class  Player final : public Person
+{
+private:
+	string power;
+
+public:
+	Player(string name, int age, bool isHappy, string type, string power) : Person(name, age, isHappy, type)
+	{
+		this->power = power;
+	}
+
+	Player(){}
+};
+
+class Enemy : public Person
+{
+
+};
+
+//class Bot : public Player, public Weapon{};
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	Person offName("__", 22, false, "slayer");
-	Person soulsHunter("DeathDestany", 22, false, "reason");
+	Player offName("__", 22, false, "slayer", "paradocs");
+	cout << offName.get_age() << endl;
+	//Enemy soulsHunter("DeathDestany", 22, false, "reason");
 
 	return 0;
 }
